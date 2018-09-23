@@ -67,7 +67,10 @@ Metrics/BlockLength:
   
 Metrics/MethodLength:
   Enabled: true
-  Max: 15
+  Max: 20
 
 Style/GuardClause:
+  Enabled: false
+
+Style/SafeNavigation:
   Enabled: false
