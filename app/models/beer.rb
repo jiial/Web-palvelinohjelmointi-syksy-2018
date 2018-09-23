@@ -1,10 +1,13 @@
 class Beer < ActiveRecord::Base
   belongs_to :brewery
   has_many :ratings, dependent: :destroy
+  has_many :raters, -> { distinct }, through: :ratings, source: :user
+
+  validates :name, presence: true
 
   include RatingAverage
 
   def to_s
-    return("#{self.name}, #{brewery.name}")
-  end  
+    "#{name}, #{brewery.name}"
+  end
 end
