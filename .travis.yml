@@ -1,0 +1,14 @@
+language: ruby
+rvm:
+- 2.5.1
+script:
+- bundle exec rails db:migrate
+- bundle exec rspec -fd spec
+deploy:
+  provider: heroku
+  api_key:
+    secure: LmsBQKJ+IqqMQCI5+P9+8XzC+IKSYp1lKxfvFQDZbHUytDoq+PAdPhhAEnEA8BfdBcmta1NQBSqdlQdewfEYXRnn8ykyqWxY4rfCFKnTuGLU8YeUt82ChF9f46Q8YOjFw2vc0WLXQTbMePwwYYUVEWzoySWmwhvb4hYDLgwMAtTESvmr2iVPtgKrE7lfRSdZreQCWyit58JCdUC3J9bhgMI5mX7SFNr64cur8xFOh0tqEk5bBUr77gObGfdTAY4IyWSOLGU6VbNARXY1b6AAl4KGy9isJ/6qbPYY7KO2IVodZybfzR+s0PPpjzrt4rZxEcmMH8+wJAqP0p+vLzZSMxuHrgHjfdxRWP7l3R6zofRILiaKLHLhUv1IYpk6kRRV7J+GLpj5uFF6aSegtrTSAHil43FNytNskBhcFl8INvrrHPMDljDnEahcJIMbPJmXpITfVaAGxkpuuB3hQOjzS4GAfElVMLsKPrFWDc/97HYXiKYxUeTV4LsRU6gi1UWCmh+UblgpvtXK8lCQq9zgW0QIT9mRf++5zy3JpYDHlsFj0UUlbrz1njbyTLEjQSpGorr+AaoLP6Ka1B3WsY3UvLUQzrOeRWJhgdcjT0g2ksPpHg0NXZmJ4bpNR/IZ1chaULi8CmjHDYcO4DiuE2sZmGW/CAUNC2CFGjsUgbc3ZEc=
+  run: "rake db:migrate"
+  app: protected-dawn-36398
+  on:
+    repo: jiial/Web-palvelinohjelmointi-syksy-2018

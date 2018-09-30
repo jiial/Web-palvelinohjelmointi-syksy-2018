@@ -12,7 +12,7 @@ has made <%= @user.ratings.count %> ratings, average rating <%= @user.average_ra
     <li>
       <%= rating %>
       <% if @user == current_user %>
-          <%= link_to 'delete', rating, method: :delete, data: { confirm: 'Are you sure?' } %>
+          <%= link_to 'delete', rating, method: :delete, data: { confirm: 'Are you sure?' }, id: rating.id %>
       <% end %>
     </li>
   <% end %>
@@ -23,6 +23,14 @@ has made <%= @user.ratings.count %> ratings, average rating <%= @user.average_ra
     <li> <%= link_to club, beer_club_path(club.id) %> </li>
 <% end %>
 </ul>
+<p></p>
+<% if @favorite_style %>
+  <p> favorite beer style <%= @favorite_style %> </p>
+<% end %>
+<p></p>
+<% if @favorite_brewery %>
+  <p> favorite brewery <%= @favorite_brewery %> </p>
+<% end %>
 <p></p>
 <% if @user == current_user %>
   <%= link_to 'Edit', edit_user_path(@user) %> |

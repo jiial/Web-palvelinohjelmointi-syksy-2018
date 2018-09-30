@@ -25,5 +25,5 @@
   Has <%= @brewery.ratings.length %> <%= "rating".pluralize(@brewery.ratings.length) %>, average <%= @brewery.average_rating %>
 <% end %>
 
-<%= link_to 'Edit', edit_brewery_path(@brewery) %> |
+<%= link_to('Edit', edit_brewery_path(@brewery)) if current_user %> |
 <%= link_to 'Back', breweries_path %>
