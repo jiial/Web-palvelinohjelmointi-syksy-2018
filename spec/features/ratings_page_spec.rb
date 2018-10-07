@@ -4,6 +4,7 @@ include Helpers
 
 describe "Ratings page" do
   let!(:brewery) { FactoryBot.create :brewery, name:"Koff" }
+  let!(:style) { FactoryBot.create :style }
   let!(:beer1) { FactoryBot.create :beer, name:"iso 3", brewery:brewery }
   let!(:beer2) { FactoryBot.create :beer, name:"Karhu", brewery:brewery }
   let!(:user) { FactoryBot.create :user }

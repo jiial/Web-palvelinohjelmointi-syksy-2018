@@ -13,12 +13,12 @@
 
   <div class="field">
     <%= form.label :name %>
-    <%= form.text_field :name %>
+    <%= form.text_field :name, :required => 'required' %>
   </div>
 
   <div>
     <%= form.label :style%>
-    <%= form.select :style, options_for_select(@styles = ["Weizen", "Lager", "Pale ale", "IPA", "Porter"]) %>
+    <%= form.select :style_id, options_from_collection_for_select(@styles, :id, :name) %>
   </div>
   <p></p>
 

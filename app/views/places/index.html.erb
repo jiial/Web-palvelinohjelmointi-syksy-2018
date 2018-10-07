@@ -1,0 +1,37 @@
+<p id="notice"><%= notice %></p>
+
+<%= form_tag places_path do %>
+  city <%= text_field_tag :city, params[:city] %>
+  <%= submit_tag "Search" %>
+<% end %>
+<p></p>
+<% if @places %>
+  <% if @weather != [] %>
+    <h3>Current weather:</h3>
+    <strong>Temperature</strong> <%= @weather['temp_c'] %> °C
+    <p></p>
+    <strong>Wind</strong> <%= @weather['wind_kph'] %> km/h
+    <p></p>
+    <strong>Condition</strong> <%= @weather['condition']['text'] %>
+    <img src="<%= @weather['condition']['icon'] %>">
+  <% end %>  
+  <p></p>
+  <table>
+    <thead>
+      <% Place.rendered_fields.each do |field| %>
+        <th><%= field %></th>
+      <% end %>
+    </thead>
+    <% @places.each do |place| %>
+      <tr>
+        <% Place.rendered_fields.each do |field| %>
+          <% if field == :name %>
+            <td><%= link_to place.name, "places/#{place.id}" %></td>
+          <% else %>  
+            <td><%= place.send(field) %></td>
+          <% end %>  
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
+<% end %>

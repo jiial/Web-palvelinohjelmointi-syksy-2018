@@ -21,10 +21,10 @@ class User < ApplicationRecord
   def favorite_style
     return nil if ratings.empty?
 
-    styles = ["Weizen", "Lager", "Pale ale", "IPA", "Porter"]
+    styles = Style.all
 
-    scores = styles.map { |s| style_average(s) }
-    styles.select { |s| (style_average(s) == scores.max) }.first
+    scores = styles.map { |s| style_average(s.name) }
+    styles.select { |s| (style_average(s.name) == scores.max) }.first
   end
 
   def style_average(style)
