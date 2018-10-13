@@ -29,8 +29,7 @@ describe "Ratings page" do
 
   it "should not have any before been created" do
     visit ratings_path
-    expect(page).to have_content 'List of ratings (0)'
-  
+    expect(page).not_to have_content 'Rated'
   end
   
   describe "when ratings exists" do
@@ -44,7 +43,6 @@ describe "Ratings page" do
     end
   
     it "it lists the ratings and their total number" do
-      expect(page).to have_content "List of ratings (#{@ratings.count})"
       @ratings.each do |rating_score|
         expect(page).to have_content rating_score
       end

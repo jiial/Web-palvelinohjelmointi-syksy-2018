@@ -1,7 +1,9 @@
 <h2>List of styles</h2>
 
-<ul>
+<div class="list-group">
   <% @styles.each do |style| %>
-    <li> <%= link_to style.name, style %></li>
+    <a> <%= link_to style.name, style, { class:"list-group-item list-group-item-action" } %></a>
   <% end %>
-</ul>
+</div>
+
+<%= link_to 'New Style', new_style_path, class:"btn btn-primary" %>

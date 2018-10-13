@@ -7,6 +7,9 @@ class Brewery < ActiveRecord::Base
                                    only_integer: true }
   validate :year_cannot_be_more_than_current_year
 
+  scope :active, -> { where active: true }
+  scope :retired, -> { where active: [nil, false] }
+
   include RatingAverage
 
   def print_report
@@ -24,5 +27,10 @@ class Brewery < ActiveRecord::Base
     if year > Time.now.year
       errors.add(:Founding_date, "can't be in the future")
     end
+  end
+
+  def self.top(amount)
+    sorted_by_rating_in_desc_order = Brewery.all.sort_by{ |b| -(b.average_rating || 0) }
+    sorted_by_rating_in_desc_order.take(amount)
   end
 end

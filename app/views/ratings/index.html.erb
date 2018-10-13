@@ -1,9 +1,57 @@
-<h2>List of ratings (<%= @ratings.count %>)</h2>
+<h2>New ratings</h2>
 
-<ul>
-  <% @ratings.each do |rating| %>
-    <li> <%= rating %> <%= link_to rating.user.username, rating.user %></li>
-  <% end %>
-</ul>
+<% if @ratings.length > 0 %>
+  <table class="table table-bordered table-primary table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Rated</th>
+        <th scope="col">Score</th>
+        <th scope="col">By</th>
+        <th scope="col">Created</th>
+      </tr>
+    </thead>
 
-<%= link_to "New Rating", new_rating_path %> 
+    <tbody>  
+      <% @ratings.each do |rating| %>
+        <tr> <td><%= rating.beer.name %></td> <td><%= rating.score %></td> <td><%= link_to rating.user.username, rating.user %></td> <td><%= rating.created_at %></td> </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+      <h3>Top beers</h3>
+      <%= render 'list', items: @top_beers %>
+    </div>
+    <div class="col-sm">
+      <h3>Top breweries</h3>
+      <%= render 'list', items: @top_breweries %>  
+    </div>
+    <div class="col-sm">
+      <h3>Top beer styles</h3>
+      <%= render 'list', items: @top_styles %>  
+    </div>
+  </div>
+</div>   
+
+<h3>Most active users</h3>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Ratings</th>
+    </tr>
+  </thead>    
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= link_to user.username, user %></td>
+        <td><%= user.ratings.count %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to "New Rating", new_rating_path, class:"btn btn-primary" %> 

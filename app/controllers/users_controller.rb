@@ -14,6 +14,11 @@ class UsersController < ApplicationController
     if @user.favorite_brewery
       @favorite_brewery = @user.favorite_brewery.name
     end
+    if current_user
+      if current_user.admin
+        @admin = true
+      end
+    end
   end
 
   # GET /users/new
@@ -64,6 +69,15 @@ class UsersController < ApplicationController
     session[:user_id] = nil
     # uudelleenohjataan sovellus pääsivulle
     redirect_to :root
+  end
+
+  def toggle_activity
+    user = User.find(params[:id])
+    user.update_attribute :active, !user.active
+
+    new_status = user.active? ? "active" : "closed"
+
+    redirect_to user, notice: "user activity status changed to #{new_status}"
   end
 
   private

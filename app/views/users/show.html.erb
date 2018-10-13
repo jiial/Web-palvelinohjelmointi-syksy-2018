@@ -1,10 +1,17 @@
-<p id="notice"><%= notice %></p>
-
 <h2>
   <strong><%= @user.username %></strong>
+  <% if not @user.active  %>
+    <span class="badge badge-danger">Account closed</span>
+  <% end %>
 </h2>
+<% if @admin && @user.active %>
+  <%= link_to 'Close account', toggle_activity_user_path(@user.id), method: :post, data: { confirm: 'Are you sure?' }, class:"btn btn-danger" %>
+<% end %>
+<% if @admin && !@user.active %>
+  <%= link_to 'Open account', toggle_activity_user_path(@user.id), method: :post, class:"btn btn-primary" %>
+<% end %>
 <p>
-has made <%= @user.ratings.count %> ratings, average rating <%= @user.average_rating %>
+has made <%= @user.ratings.count %> ratings, average rating <%= round(@user.average_rating) %>
 </p>
 <h3>ratings</h3>
 <ul>

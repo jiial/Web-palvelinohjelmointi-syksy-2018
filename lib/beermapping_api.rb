@@ -1,14 +1,12 @@
 class BeermappingApi
   def self.places_in(city)
-    Rails.cache.cleanup
     city = city.downcase
+    Rails.cache.fetch(city, expires_in: 1.week) { get_places_in(city) }
+  end
 
-    places = Rails.cache.read(city)
-    return places if places
-
-    places = get_places_in(city)
-    Rails.cache.write(city, places, expires_in: 86_400)
-    places
+  def self.place_in(city, identifier)
+    places = Rails.cache.read(city.downcase)
+    places.find{ |p| p.id == identifier }
   end
 
   def self.get_places_in(city)

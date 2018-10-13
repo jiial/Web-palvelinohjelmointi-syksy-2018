@@ -11,22 +11,20 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
+  <div class="form-group">
+    <%= form.label :name, "Name" %>
+    <%= form.text_field :name, class: "form-control", placeholder: "Enter name for beer club" %>
   </div>
 
-  <div class="field">
-    <%= form.label :founded %>
-    <%= form.number_field :founded %>
+  <div class="form-group">
+    <%= form.label :founded, "Founded" %>
+    <%= form.text_field :founded, class: "form-control", placeholder: "Give founding year" %>
   </div>
 
-  <div class="field">
-    <%= form.label :city %>
-    <%= form.text_field :city %>
+  <div class="form-group">
+    <%= form.label :city, "City" %>
+    <%= form.text_field :city, class: "form-control", placeholder: "Enter city" %>
   </div>
 
-  <div class="actions">
-    <%= form.submit %>
-  </div>
+  <button type="submit" class="btn btn-primary">Create beer club</button>
 <% end %>
