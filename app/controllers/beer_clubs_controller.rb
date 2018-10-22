@@ -6,6 +6,14 @@ class BeerClubsController < ApplicationController
   # GET /beer_clubs.json
   def index
     @beer_clubs = BeerClub.all
+
+    order = params[:order] || 'name'
+
+    @beer_clubs = case order
+                  when 'name' then @beer_clubs.sort_by(&:name)
+                  when 'founded' then @beer_clubs.sort_by(&:founded)
+                  when 'city' then @beer_clubs.sort_by(&:city)
+                  end
   end
 
   # GET /beer_clubs/1
@@ -15,13 +23,14 @@ class BeerClubsController < ApplicationController
     @rating.beer = @beer
     @membership = Membership.new
     @membership.beer_club = @beer_club
-    @memberships = Membership.all
+    @memberships = @beer_club.memberships.where(confirmed: true)
     @memberships.each do |m|
-      if m.beer_club == @beer_club && m.user == current_user
+      if m.beer_club == @beer_club && m.user == current_user && m.confirmed == true
         @member = true
         @membership = Membership.find_by(user_id: current_user.id, beer_club_id: @beer_club.id)
       end
     end
+    @applications = Membership.all.where(beer_club_id: @beer_club.id, confirmed: nil)
   end
 
   # GET /beer_clubs/new
@@ -37,7 +46,7 @@ class BeerClubsController < ApplicationController
   # POST /beer_clubs.json
   def create
     @beer_club = BeerClub.new(beer_club_params)
-
+    Membership.create(beer_club_id: @beer_club.id, user_id: current_user.id, confirmed: true)
     respond_to do |format|
       if @beer_club.save
         format.html { redirect_to @beer_club, notice: 'Beer club was successfully created.' }
@@ -74,6 +83,22 @@ class BeerClubsController < ApplicationController
       end
     else
       redirect_to beer_club_path, notice: 'You are not an admin'
+    end
+  end
+
+  def toggle_confirmed
+    @membership = Membership.find(params[:id])
+    @memberships = Membership.all.where(confirmed: true)
+    @memberships.each do |m|
+      if m.beer_club == @membership.beer_club && m.user == current_user && m.confirmed == true
+        @member = true
+      end
+    end
+    if @member
+      membership = Membership.find(params[:id])
+      membership.update_attribute :confirmed, true
+
+      redirect_to membership_path, notice: "Membership confirmed"
     end
   end
 

@@ -34,7 +34,7 @@ class MembershipsController < ApplicationController
     respond_to do |format|
       if !Membership.find_by(user_id: current_user.id, beer_club_id: @membership.beer_club_id)
         if @membership.save
-          format.html { redirect_to @beer_club, notice: "#{current_user.username} welcome to the club!" }
+          format.html { redirect_to @beer_club, notice: "Your application has been sent!" }
           format.json { render :show, status: :created, location: @membership }
         else
           format.html { render :new }

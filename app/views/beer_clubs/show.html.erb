@@ -15,10 +15,20 @@
 
 <p>
   <strong>Members:</strong>
-  <% @beer_club.members.each do |member| %>
-    <%= link_to member.username, member %>
+  <% @memberships.each do |member| %>
+    <%= link_to member.user.username, member %>
   <% end %>
 </p>
+
+<% if current_user && @member %>
+  <p>
+    <strong>Applications:</strong>
+    <% @applications.each do |application| %>
+      <%= link_to application.user.username, application %>
+      <%= link_to "Confirm", toggle_confirmed_beer_club_path(application.id), method: :post, class: "btn btn-primary" %>
+    <% end %>
+  </p>
+<% end %>
 
 <% if current_user && !@member %>
   <%= form_for(@membership) do |f| %>
